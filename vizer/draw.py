@@ -20,14 +20,14 @@ def compute_color_for_labels(label):
     return tuple(color)
 
 
-def _draw_single_box(image, xmin, ymin, xmax, ymax, color=(0, 255, 0), display_str=None, font=None, width=2, alpha=0.5):
+def _draw_single_box(image, xmin, ymin, xmax, ymax, color=(0, 255, 0), display_str=None, font=None, width=2, alpha=0.5, fill=False):
     if font is None:
         font = FONT
 
     draw = ImageDraw.Draw(image, mode='RGBA')
     left, right, top, bottom = xmin, xmax, ymin, ymax
     alpha_color = color + (int(255 * alpha),)
-    draw.rectangle([(left, top), (right, bottom)], outline=color, width=width)
+    draw.rectangle([(left, top), (right, bottom)], outline=color, fill=alpha_color if fill else None, width=width)
 
     if display_str:
         text_bottom = bottom
@@ -53,6 +53,7 @@ def draw_boxes(image,
                class_name_map=None,
                width=2,
                alpha=0.5,
+               fill=False,
                font=None):
     """Draw bboxes(labels, scores) on image
     Args:
@@ -63,6 +64,7 @@ def draw_boxes(image,
         class_name_map: list or dict, map class id to class name for visualization.
         width: box width
         alpha: text background alpha
+        fill: fill box or not
         font: text font
     Returns:
         An image with information drawn on it.
@@ -101,7 +103,8 @@ def draw_boxes(image,
                                       display_str=display_str,
                                       font=font,
                                       width=width,
-                                      alpha=alpha)
+                                      alpha=alpha,
+                                      fill=fill)
 
     image = np.array(draw_image, dtype=np.uint8)
     return image
@@ -129,6 +132,8 @@ def draw_masks(image,
     Returns:
         np.ndarray
     """
+    if isinstance(image, Image.Image):
+        image = np.array(image)
     assert isinstance(image, np.ndarray)
     masks = np.array(masks)
     for i, mask in enumerate(masks):

@@ -1,8 +1,8 @@
 # Created by lufficc
 import pickle
 
-import cv2
 import matplotlib.pyplot as plt
+from PIL import Image
 
 from vizer.draw import draw_boxes, draw_masks
 
@@ -25,7 +25,7 @@ if __name__ == '__main__':
     name = '000000308476'
     with open('data/%s.pickle' % name, 'rb') as f:
         data = pickle.load(f)
-    img = cv2.imread('data/%s.jpg' % name)
+    img = Image.open('data/%s.jpg' % name)
     img = draw_masks(img, data['masks'], data['labels'])
     img = draw_boxes(img, boxes=data['boxes'], labels=data['labels'], scores=data['scores'],
                      class_name_map=coco_class_name)

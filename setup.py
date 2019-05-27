@@ -2,7 +2,7 @@ from distutils.core import setup
 
 setup(
     name='Vizer',
-    version='0.1.2',
+    version='0.1.3',
     author='lufficc',
     author_email='luffy.lcc@gmail.com',
     packages=['vizer'],
@@ -10,7 +10,7 @@ setup(
     scripts=[],
     description='Boxes and masks visualization tools.',
     install_requires=[
-        "opencv-python>=3.4.2.17",
+        "opencv-python",
         "numpy",
         "Pillow",
     ],
