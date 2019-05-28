@@ -10,13 +10,14 @@ try:
 except IOError:
     FONT = ImageFont.load_default()
 
+palette = (2 ** 11 - 1, 2 ** 15 - 1, 2 ** 20 - 1)
+
 
 def compute_color_for_labels(label):
     """
     Simple function that adds fixed color depending on the class
     """
-    palette = [2 ** 25 - 1, 2 ** 15 - 1, 2 ** 21 - 1]
-    color = [int((p * label) % 255) for p in palette]
+    color = [int((p * (label ** 2 - label + 1)) % 255) for p in palette]
     return tuple(color)
 
 
