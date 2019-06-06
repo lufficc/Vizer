@@ -55,7 +55,8 @@ def draw_boxes(image,
                width=2,
                alpha=0.5,
                fill=False,
-               font=None):
+               font=None,
+               score_format=':{:.2f}'):
     """Draw bboxes(labels, scores) on image
     Args:
         image: numpy array image, shape should be (height, width, channel)
@@ -67,6 +68,7 @@ def draw_boxes(image,
         alpha: text background alpha
         fill: fill box or not
         font: text font
+        score_format: score format
     Returns:
         An image with information drawn on it.
     """
@@ -91,9 +93,9 @@ def draw_boxes(image,
         if scores is not None:
             prob = scores[i]
             if display_str:
-                display_str += ':{:.2f}'.format(prob)
+                display_str += score_format.format(prob)
             else:
-                display_str += 'score:{:.2f}'.format(prob)
+                display_str += 'score' + score_format.format(prob)
 
         draw_image = _draw_single_box(image=draw_image,
                                       xmin=boxes[i, 0],

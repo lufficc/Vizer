@@ -27,7 +27,6 @@ if __name__ == '__main__':
         data = pickle.load(f)
     img = Image.open('data/%s.jpg' % name)
     img = draw_masks(img, data['masks'], data['labels'])
-    img = draw_boxes(img, boxes=data['boxes'], labels=data['labels'], scores=data['scores'],
-                     class_name_map=coco_class_name)
+    img = draw_boxes(img, boxes=data['boxes'], labels=data['labels'], scores=data['scores'], class_name_map=coco_class_name, score_format=':{:.4f}')
     plt.imshow(img)
     plt.show()
