@@ -5,6 +5,8 @@ import PIL.Image as Image
 import PIL.ImageDraw as ImageDraw
 import PIL.ImageFont as ImageFont
 
+from ._utils import find_contours
+
 try:
     FONT = ImageFont.truetype('arial.ttf', 24)
 except IOError:
@@ -149,7 +151,7 @@ def draw_masks(image,
                          mask * np.array(_color) * alpha + image * (1 - alpha),
                          image)
         if border:
-            _, contours, hierarchy = cv2.findContours(mask.astype(np.uint8), cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+            contours, hierarchy = find_contours(mask.astype(np.uint8), cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
             image = cv2.drawContours(image, contours, -1, border_color, thickness=border_width, lineType=cv2.LINE_AA)
 
     image = image.astype(np.uint8)
